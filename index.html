@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <title>Bus Tracking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <h2>Bus Tracking System</h2>
+        <p>Select a Bus Number and Route to track:</p>
+        <select id="busNumber">
+            <option value="Bus001">Bus 001</option>
+            <option value="Bus002">Bus 002</option>
+            <option value="Bus003">Bus 003</option>
+            <option value="Bus004">Bus 004</option>
+            <!-- Add more bus options here -->
+        </select>
+        <select id="busRoute">
+            <option value="RouteA">Route A</option>
+            <option value="RouteB">Route B</option>
+            <option value="RouteC">Route C</option>
+            <option value="RouteD">Route D</option>
+            <!-- Add more route options here -->
+        </select>
+        <button id="searchButton">Search Bus</button>
+        <div id="busInfo">
+            <h2>Selected Bus Information</h2>
+            <p>Bus Number: <span id="selectedBusNumber"></span></p>
+            <p>Route: <span id="selectedBusRoute"></span></p>
+            <p>Bus Type: <span id="busType"></span></p>
+            <p>BusTime: <span id="busTime"></span></p>
+            <p>Price: <span id="price"></span></p>
+            <p>Conductor Name: <span id="ConName"></span></p>
+            <p>Conductor Phone No: <span id="ConPh"></span></p>
+            <p>Service: <span id="service"></span></p>
+            <p>Women Free: <span id="womenFree"></span></p>
+        </div>
+    </div>
+   
+    <div id="map" style="height: 600px;"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="style.js"></script>
+</body>
+</html>
