@@ -51,6 +51,11 @@ body {
 
     padding: 0%;
   }
+  .map-main{
+    width: 100% !important;
+    position: relative;
+    
+  }
 }
 
 .form-section {
@@ -449,3 +454,27 @@ option {
   object-fit: cover;
 
 }
+
+.leaflet-routing-alt-minimized{
+  display: none;
+}
+
+.leaflet-routing-alt{
+  height: 30vh;
+  /* overflow-y: scroll; */
+}
+
+.map-main{
+  width: 50%;
+  position: relative;
+  
+}
+
+.x{
+  position: absolute;
+  top:4%;
+  right: 2%;
+  z-index: 9999999999999999;
+  background-color: #009846;
+}
+

@@ -56,6 +56,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const markerLayer = L.layerGroup().addTo(map);
 let routingControl = null;
+let routeVisible = false;
 
 function addLocationMarkers(locationData) {
     locationData.forEach(location => {
@@ -109,9 +110,6 @@ function trackLocation() {
     }
 }
 
-
-
-
 function calculateDistance(point1, point2) {
     const R = 6371;
     const dLat = deg2rad(point2.lat - point1.lat);
@@ -144,9 +142,24 @@ function addRoute(start, end) {
         ],
         routeWhileDragging: true
     }).addTo(map);
+
+    // Add class to the routing control for styling
+    const routingContainer = document.querySelector('.leaflet-routing-container');
+    routingContainer.classList.add('leaflet-routing-alt');
+
+    // Hide route by default
+    if (!routeVisible) {
+        routingContainer.style.display = 'block';
+    }
 }
 
 document.getElementById("searchButton").addEventListener("click", trackLocation);
+
+document.getElementById("toggleRouteButton").addEventListener("click", () => {
+    const routingContainer = document.querySelector('.leaflet-routing-container');
+    routeVisible = !routeVisible;
+    routingContainer.style.display = routeVisible ? 'block' : 'none';
+});
 
 document.getElementById("category").readOnly = true;
 document.getElementById("location").readOnly = true;
