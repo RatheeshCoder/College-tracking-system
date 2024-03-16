@@ -1,98 +1,152 @@
-    // Sample bus data (replace with real-time data)
-    const busLocations = [
-        { id: "Bus001", route: "RouteA", lat: 11.0168, lng: 76.9558,busType:"Normal",busTime:"11:00",price:"$100",ConName:"Sam",ConPh:1234567890,service:"12/12/2023",womenFree:"YES" },
-        { id: "Bus002", route: "RouteB", lat: 10.9925, lng: 76.9614,busType:"Deluxe",busTime:"12:00",price:"$100",ConName:"John",ConPh:987654321,service:"10/2/2023",womenFree:"NO" },
-        { id: "Bus003", route: "RouteC", lat: 11.0256, lng: 76.9460,busType:"Normal",busTime:"01:00",price:"$100",ConName:"Kumar",ConPh:67890654321,service:"1/1/2023",womenFree:"YES" },
-        { id: "Bus004", route: "RouteD", lat: 11.0150, lng: 76.9684 ,busType:"Deluxe",busTime:"04:00",price:"$100",ConName:"Mani",ConPh:890-7654321,service:"11/5/2023",womenFree:"NO"},
-      
-    ];
+const collegeLocations = [
+    // Department data
+    { category: "Department", location: "CS", lat: 11.0810, lng: 77.1385 },
+    { category: "Department", location: "EE", lat: 11.0850, lng: 77.1430 },
+    { category: "Department", location: "ME", lat: 11.0822, lng: 77.1388 },
+    { category: "Department", location: "CE", lat: 11.0805, lng: 77.1397 },
+    { category: "Department", location: "BT", lat: 11.0842, lng: 77.1415 },
+    { category: "Department", location: "CH", lat: 11.0837, lng: 77.1375 },
+    { category: "Department", location: "PH", lat: 11.0818, lng: 77.1423 },
+    { category: "Department", location: "MA", lat: 11.0855, lng: 77.1400 },
+    { category: "Department", location: "EC", lat: 11.0832, lng: 77.1370 },
+    { category: "Department", location: "EN", lat: 11.0840, lng: 77.1420 },
 
-    // Initialize Leaflet map
-    const map = L.map('map').setView([11.0168, 76.9558], 12);
+    // HOD data
+    { category: "HOD", location: "HOD_CS", lat: 11.0810, lng: 77.1385 },
+    { category: "HOD", location: "HOD_EE", lat: 11.0850, lng: 77.1430 },
+    { category: "HOD", location: "HOD_ME", lat: 11.0822, lng: 77.1388 },
+    { category: "HOD", location: "HOD_CE", lat: 11.0805, lng: 77.1397 },
+    { category: "HOD", location: "HOD_BT", lat: 11.0842, lng: 77.1415 },
+    { category: "HOD", location: "HOD_CH", lat: 11.0837, lng: 77.1375 },
+    { category: "HOD", location: "HOD_PH", lat: 11.0818, lng: 77.1423 },
+    { category: "HOD", location: "HOD_MA", lat: 11.0855, lng: 77.1400 },
+    { category: "HOD", location: "HOD_EC", lat: 11.0832, lng: 77.1370 },
+    { category: "HOD", location: "HOD_EN", lat: 11.0840, lng: 77.1420 },
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
+    // Staff data
+    { category: "Staff", location: "Staff1", lat: 11.0810, lng: 77.1385 },
+    { category: "Staff", location: "Staff2", lat: 11.0850, lng: 77.1430 },
+    { category: "Staff", location: "Staff3", lat: 11.0822, lng: 77.1388 },
+    { category: "Staff", location: "Staff4", lat: 11.0805, lng: 77.1397 },
+    { category: "Staff", location: "Staff5", lat: 11.0842, lng: 77.1415 },
+    { category: "Staff", location: "Staff6", lat: 11.0837, lng: 77.1375 },
+    { category: "Staff", location: "Staff7", lat: 11.0818, lng: 77.1423 },
+    { category: "Staff", location: "Staff8", lat: 11.0855, lng: 77.1400 },
+    { category: "Staff", location: "Staff9", lat: 11.0832, lng: 77.1370 },
+    { category: "Staff", location: "Staff10", lat: 11.0840, lng: 77.1420 },
 
-    // Define a set of unique colors for routes
-    const routeColors = {
-        RouteA: 'red',
-        RouteB: 'blue',
-        RouteC: 'green',
-        RouteD: 'purple',
-        RouteE: 'orange',
-    };
+    // Office data
+    { category: "Office", location: "Office1", lat: 11.0810, lng: 77.1385 },
+    { category: "Office", location: "Office2", lat: 11.0850, lng: 77.1430 },
+    { category: "Office", location: "Office3", lat: 11.0822, lng: 77.1388 },
+    { category: "Office", location: "Office4", lat: 11.0805, lng: 77.1397 },
+    { category: "Office", location: "Office5", lat: 11.0842, lng: 77.1415 },
+    { category: "Office", location: "Office6", lat: 11.0837, lng: 77.1375 },
+    { category: "Office", location: "Office7", lat: 11.0818, lng: 77.1423 },
+    { category: "Office", location: "Office8", lat: 11.0855, lng: 77.1400 },
+    { category: "Office", location: "Office9", lat: 11.0832, lng: 77.1370 },
+    { category: "Office", location: "Office10", lat: 11.0840, lng: 77.1420 }
+];
 
-    // Create a layer group to manage markers
-    const markerLayer = L.layerGroup().addTo(map);
+const map = L.map('map').setView([11.0834, 77.1402], 15);
 
-    // Function to add bus markers to the map
-    function addBusMarkers(busData) {
-        busData.forEach(bus => {
-            const marker = L.marker([bus.lat, bus.lng], {
-                icon: new L.Icon({
-                    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${routeColors[bus.route] || 'gray'}.png`,
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                })
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+const markerLayer = L.layerGroup().addTo(map);
+let routingControl = null;
+
+function addLocationMarkers(locationData) {
+    locationData.forEach(location => {
+        const marker = L.marker([location.lat, location.lng]).addTo(markerLayer);
+        marker.bindPopup(`Category: ${location.category}, Location: ${location.location}`);
+    });
+}
+
+addLocationMarkers(collegeLocations);
+
+function trackLocation() {
+    const selectedCategory = document.getElementById("category").value;
+    const selectedLocation = document.getElementById("location").value;
+
+    markerLayer.clearLayers();
+
+    const selectedLocationData = collegeLocations.find(location => location.category === selectedCategory && location.location === selectedLocation);
+
+    if (selectedLocationData) {
+        const marker = L.marker([selectedLocationData.lat, selectedLocationData.lng]).addTo(map);
+        map.flyTo([selectedLocationData.lat, selectedLocationData.lng], 15, { duration: 2 });
+        marker.bindPopup(`Category: ${selectedLocationData.category}, Location: ${selectedLocationData.location}`).openPopup();
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                const distance = calculateDistance(userLocation, { lat: selectedLocationData.lat, lng: selectedLocationData.lng });
+                Swal.fire({
+                    title: "Distance",
+                    text: `Distance: ${distance.toFixed(2)} km`,
+                    icon: "info"
+                });
+
+                addRoute(userLocation, { lat: selectedLocationData.lat, lng: selectedLocationData.lng });
+            }, error => {
+                console.error('Error getting user location:', error);
             });
-
-            // Attach a popup to the marker with the bus ID and route
-            marker.bindPopup(`Bus ID: ${bus.id}, Route: ${bus.route}`);
-            marker.on('mouseover', function () {
-                this.openPopup();
-            });
-
-            markerLayer.addLayer(marker);
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    } else {
+        Swal.fire({
+            title: "Location Not Found",
+            text: "Location not found!",
+            icon: "error"
         });
     }
+}
 
-    // Add initial bus markers
-    addBusMarkers(busLocations);
 
-    // Function to track a specific bus by its number and route
-    function trackBus() {
-        const selectedBusNumber = document.getElementById("busNumber").value;
-        const selectedBusRoute = document.getElementById("busRoute").value;
 
-        // Clear existing markers and close any open popups
-        markerLayer.clearLayers();
 
-        // Find the selected bus in the data
-        const selectedBus = busLocations.find(bus => bus.id === selectedBusNumber && bus.route === selectedBusRoute);
+function calculateDistance(point1, point2) {
+    const R = 6371;
+    const dLat = deg2rad(point2.lat - point1.lat);
+    const dLng = deg2rad(point2.lng - point1.lng);
 
-        if (selectedBus) {
-            // Add a marker for the selected bus
-            const marker = L.marker([selectedBus.lat, selectedBus.lng]).addTo(map);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(point1.lat)) * Math.cos(deg2rad(point2.lat)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
 
-            // Zoom in to the location of the selected bus with a fly-in effect
-            map.flyTo([selectedBus.lat, selectedBus.lng], 15, {
-                duration: 2
-            });
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-            // Open a popup at the bus's location
-            marker.bindPopup(`Bus ID: ${selectedBus.id}, Route: ${selectedBus.route}`).openPopup();
+    const distance = R * c;
+    return distance;
+}
 
-            // Display the selected bus information
-            document.getElementById("selectedBusNumber").textContent = selectedBus.id;
-            document.getElementById("selectedBusRoute").textContent = selectedBus.route;
-            document.getElementById("busType").textContent = selectedBus.busType;
-            document.getElementById("busTime").textContent = selectedBus.busTime;
-            document.getElementById("price").textContent = selectedBus.price;
-            document.getElementById("ConName").textContent = selectedBus.ConName;
-            document.getElementById("ConPh").textContent = selectedBus.ConPh;
-            document.getElementById("service").textContent = selectedBus.service;
-            document.getElementById("womenFree").textContent = selectedBus.womenFree;
-            document.getElementById("busInfo").style.display = "block";
-        } else {
-            // Show an alert if the bus is not found
-            alert("Bus not found!");
-        }
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
+
+function addRoute(start, end) {
+    if (routingControl) {
+        map.removeControl(routingControl);
     }
 
-    // Add an event listener to the search button
-    document.getElementById("searchButton").addEventListener("click", trackBus);
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(start.lat, start.lng),
+            L.latLng(end.lat, end.lng)
+        ],
+        routeWhileDragging: true
+    }).addTo(map);
+}
 
-    // Make the latitude and longitude fields readonly
-    document.getElementById("busNumber").readOnly = true;
-    document.getElementById("busRoute").readOnly = true;
+document.getElementById("searchButton").addEventListener("click", trackLocation);
+
+document.getElementById("category").readOnly = true;
+document.getElementById("location").readOnly = true;
